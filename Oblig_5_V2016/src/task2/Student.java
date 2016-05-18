@@ -1,6 +1,12 @@
 package task2;
 
-public class Student implements Comparable<Student>, Cloneable {
+import java.io.Serializable;
+
+public class Student implements Comparable<Student>, Cloneable, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String firstname;
 	private String lastname;
 	private String street;
@@ -8,12 +14,12 @@ public class Student implements Comparable<Student>, Cloneable {
 	private String state;
 	private String zip;
 	
-	public static void main(String[] args) throws CloneNotSupportedException{
-		Student a = new Student("John", "Birch", "Queens", "NYC", "Massachusettes", "88223");
+	/*public static void main(String[] args) throws CloneNotSupportedException{
+		Student a = new Student("John", "Birch", "Queens", "NYC", "Massachusettes", "88223")
 		Student b = (Student) a.clone();
 		b.firstname = "Jomes";
 		System.out.println(a.compareTo(b));
-	}
+	}*/
 
 	public Student(String firstname, String lastname, String street, String city, String state, String zip) {
 		this.firstname = firstname;
@@ -23,13 +29,15 @@ public class Student implements Comparable<Student>, Cloneable {
 		this.state = state;
 		this.zip = zip;
 	}
+	
+	public String getName(){
+		return firstname + " " + lastname;
+	}
 
-	@Override
 	public int compareTo(Student s) {
 		if(lastname.equals(s.lastname))
 			return firstname.compareTo(s.firstname);
-		else
-			return lastname.compareTo(s.lastname);
+		return lastname.compareTo(s.lastname);
 	}
 	
 	@Override

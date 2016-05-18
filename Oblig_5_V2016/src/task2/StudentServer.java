@@ -1,5 +1,6 @@
 package task2;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -96,13 +97,18 @@ public class StudentServer {
 		System.out.println("Starting Load");
 		File f = new File("Students.txt");
 		try {
+			boolean continueReading = true;
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
 			int count = 0;
-			while(in.available() > 0){
-				count++;
+			while(continueReading){
+				try {
 				Student s = (Student)in.readObject();
+				count++;
 				students.add(s);
 				System.out.println("Loaded student " + s.toString());
+				} catch(EOFException e) {
+					continueReading = false;
+				}
 			}
 			in.close();
 			System.out.println("Load complete - loaded " + count + " objects:");
